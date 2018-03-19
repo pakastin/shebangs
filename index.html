@@ -64,7 +64,9 @@
 
       timeline.stop();
 
-      timeline.fromTo(p, .25, { scale: 3 }, { scale: 1, onStart: () => {
+      timeline.fromTo(audio, .125, { volume: 0 }, { volume: 1 }, 0);
+
+      timeline.fromTo(p, .3, { scale: 3 }, { scale: 1, onStart: () => {
         p.style.color = 'magenta';
         p.textContent = '#!';
       } }, .25);
@@ -89,6 +91,8 @@
       timeline.to(p, .25, { scale: 0, onComplete: () => {
         p.textContent = '';
       } }, 5.5);
+
+      timeline.to(audio, .3, { volume: 0 }, 6.7);
 
       audio.onplay = () => {
         timeline.gotoAndPlay(0);
