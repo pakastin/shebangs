@@ -20,6 +20,12 @@
         font-weight: 700;
         color: magenta;
       }
+      span {
+        position: absolute;
+        top: 4.5rem;
+        transform: translate(-50%, -50%);
+        white-space: nowrap;
+      }
       button {
         position: absolute;
         transform: translate(-50%, -50%);
@@ -44,10 +50,12 @@
     <div id="center">
       <button>Start!</button>
       <p></p>
+      <span>Warning, loud music ahead!</span>
     </div>
     <script>
       var audio = document.getElementsByTagName('audio')[0];
       var p = document.getElementsByTagName('p')[0];
+      var span = document.getElementsByTagName('span')[0];
       var start = document.getElementsByTagName('button')[0];
       var lastTime;
 
@@ -93,6 +101,7 @@
 
       start.onclick = () => {
         start.parentNode.removeChild(start);
+        span.parentNode.removeChild(span);
 
         audio.autoplay = true;
         audio.loop = true;
