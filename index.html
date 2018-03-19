@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shebangs!</title>
+    <style>
+      body {
+        font-family: sans-serif;
+        background-color: #fff;
+      }
+      #center {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+      p {
+        font-size: 10vw;
+        font-weight: 700;
+        color: magenta;
+      }
+      button {
+        position: absolute;
+        transform: translate(-50%, -50%);
+        padding: .75rem 1.5rem;
+        font-size: 1.5rem;
+        font-weight: 700;
+        background-color: cyan;
+        color: magenta;
+        border: 0;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.4/TweenMax.min.js"></script>
+    <audio>
+      <source src="shebangs.mp3" type="audio/mp3"></source>
+    </audio>
+    <div id="center">
+      <button>Start!</button>
+      <p></p>
+    </div>
+    <script>
+      var audio = document.getElementsByTagName('audio')[0];
+      var p = document.getElementsByTagName('p')[0];
+      var start = document.getElementsByTagName('button')[0];
+      var lastTime;
+
+      var timeline = new TimelineMax();
+
+      timeline.stop();
+
+      timeline.fromTo(p, .25, { scale: 3 }, { scale: 1, onStart: () => {
+        p.style.color = 'magenta';
+        p.textContent = '#!';
+      } }, .25);
+
+      timeline.fromTo(p, .25, { scale: 3 }, { scale: 1, onStart: () => {
+        p.textContent = '#!';
+      } }, 1);
+
+      timeline.to(p, .25, { scale: 0, onComplete: () => {
+        p.textContent = '';
+      } }, 2);
+
+      timeline.fromTo(p, .25, { scale: 3 }, { scale: 1, onStart: () => {
+        p.style.color = 'red';
+        p.textContent = 'mv';
+      } }, 3.75);
+
+      timeline.fromTo(p, .25, { scale: 3 }, { scale: 1, onStart: () => {
+        p.textContent = 'mv';
+      } }, 4.5);
+
+      timeline.to(p, .25, { scale: 0, onComplete: () => {
+        p.textContent = '';
+      } }, 5.5);
+
+      audio.onplay = () => {
+        timeline.gotoAndPlay(0);
+      }
+      audio.ontimeupdate = () => {
+        if (audio.currentTime < lastTime) {
+          timeline.gotoAndPlay(audio.currentTime);
+        }
+        lastTime = audio.currentTime;
+      }
+
+      start.onclick = () => {
+        start.parentNode.removeChild(start);
+
+        audio.autoplay = true;
+        audio.loop = true;
+
+        audio.load();
+      }
+    </script>
+  </body>
+</html>
